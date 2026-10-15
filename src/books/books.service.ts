@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Book } from './entities/book-entity.js';
-import { CreateBookDto } from './dto/create-boot.dto.js';
+import { CreateBookDto } from './dto/create-book.dto.js';
 
 @Injectable()//decorator untuk menandai kelas ini sebagai provider yang dapat di-inject ke dalam controller atau service lain
 export class BooksService {
