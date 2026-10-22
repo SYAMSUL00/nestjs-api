@@ -1,6 +1,6 @@
 import { Body, Controller, Patch, Post } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
-import { registerDto } from './dto/register.dto.js';
+import { RegisterDto } from './dto/register.dto.js';
 import { user } from './entities/users-entity.js';
 
 // - /auth/register : POST
@@ -13,7 +13,7 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
     
     @Post ('register')
-    register(@Body() registerDto:registerDto){
+    register(@Body() registerDto:RegisterDto){
         return this.authService.register(registerDto);
     }
 

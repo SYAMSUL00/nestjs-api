@@ -1,5 +1,5 @@
-import { loginDto } from './dto/login.dto.js';
-import { registerDto } from './dto/register.dto.js';
+import { LoginDto } from './dto/login.dto.js';
+import { RegisterDto } from './dto/register.dto.js';
 import { forgotPasswordDto } from './dto/forgot-password.dto.js';
 import { Injectable } from '@nestjs/common';
 import { user } from './entities/users-entity.js';
@@ -7,7 +7,7 @@ import { user } from './entities/users-entity.js';
 @Injectable()
 export class AuthService {
     //register
-    register(registerDto: registerDto): user{
+    register(registerDto: RegisterDto): user{
         const newUser: user = {
             id : 1,
             nama : registerDto.nama,
@@ -20,8 +20,8 @@ export class AuthService {
     }
 
     //login
-    login(loginDto: loginDto): loginDto{
-        const user: loginDto = {
+    login(loginDto: LoginDto): LoginDto{
+        const user: LoginDto = {
             email : loginDto.email,
             password : loginDto.password
         }

@@ -1,13 +1,11 @@
-import { IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class LoginDto {
-  @IsString()
-  @IsNotEmpty({ message: 'Username harus diisi' })
-  readonly username: string;
+    @IsNotEmpty({ message: "Email Harus Diisi" })
+    @IsEmail({}, { message: "Format Email Tidak Valid" })
+    readonly email: string;
 
-  @IsString()
-  @IsNotEmpty({ message: 'Password harus diisi' })
-  @MinLength(3, { message: 'Password minimal 3 karakter' })
-  @MaxLength(16, { message: 'Password maksimal 16 karakter' })
-  readonly password: string;
+    @IsNotEmpty({ message: "Password Harus Diisi" })
+    @IsString({ message: "Password harus berupa teks" })
+    readonly password: string;
 }
