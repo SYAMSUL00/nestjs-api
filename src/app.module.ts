@@ -7,6 +7,16 @@ import { LogMiddlewareMiddleware } from './middleware/log-middleware/log-middlew
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthorsModule } from './authors/authors.module.js';
+import { CustomersModule } from './customers/customers.module.js';
+import { CategoriesModule } from './categories/categories.module.js';
+import { CustomerAddressesModule } from './customer_addresses/customer_addresses.module.js';
+import { PublishersModule } from './publishers/publishers.module.js';
+import { OrdersModule } from './orders/orders.module.js';
+import { OrderItemsModule } from './order_items/order_items.module.js';
+import { PaymentsModule } from './payments/payments.module.js';
+import { ShipmentsModule } from './shipments/shipments.module.js';
+import { BookAuthorsModule } from './book_authors/book_authors.module.js';
 
 @Module({
   imports: [
@@ -17,38 +27,45 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000),
         NODE_ENV: Joi.string()
-        .valid('development','staging','production')
-        .default('development'),
+          .valid('development', 'staging', 'production')
+          .default('development'),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.number().default(5432),
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
-        DB_DATABASE: Joi.string().required()
-      })
+        DB_DATABASE: Joi.string().required(),
+      }),
     }),
-
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (ConfigService: ConfigService) => ({
-        type: 'postgres',
-        host: ConfigService.get<string>('DB_HOST'),
-        post: ConfigService.get<number>('DB_POST'),
-        username: ConfigService.get<string>('DB_USERNAME'),
-        password: ConfigService.get<string>('DB_PASSWORD'),
-        database: ConfigService.get<string>('DB_DATABASE'),
-
-        //otomatis sync .entity ke table
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres' as const,
+        host: configService.getOrThrow<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.getOrThrow<string>('DB_USERNAME'),
+        password: configService.getOrThrow<string>('DB_PASSWORD'),
+        database: configService.getOrThrow<string>('DB_DATABASE'),
         autoLoadEntities: true,
 
-        synchronize: ConfigService.get<string>('NODE_ENV') === 'development'
-      })
-    })
+        synchronize: configService.get<string>('NODE_ENV') === 'development'
+      }),
+    }),
+    AuthorsModule,
+    CustomersModule,
+    CategoriesModule,
+    CustomerAddressesModule,
+    PublishersModule,
+    OrdersModule,
+    OrderItemsModule,
+    PaymentsModule,
+    ShipmentsModule,
+    BookAuthorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule{
-  configure(consumer: MiddlewareConsumer){
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
     consumer.apply(LogMiddlewareMiddleware).forRoutes('*');
   }
 }
