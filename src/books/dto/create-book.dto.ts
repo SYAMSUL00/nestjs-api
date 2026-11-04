@@ -1,4 +1,4 @@
-import { ArrayUnique, IsArray, IsBoolean, IsInt, IsNotEmpty, isNotEmpty, IsNumber, IsOptional, IsUUID, MaxLength, Min } from "class-validator";
+import { ArrayUnique, IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsUUID, MaxLength, Min } from "class-validator";
 
 export class CreateBookDto {
     @IsNotEmpty({message: "Judul tidak boleh kosong"})
@@ -6,7 +6,7 @@ export class CreateBookDto {
     readonly title: string;
 
     @IsNotEmpty({message: "ISBN tidak boleh kosong"})
-    @MaxLength(50, {message: "ISBN maksimal 50 karakter"})
+    @MaxLength(45, {message: "ISBN maksimal 45 karakter"})
     readonly isbn: string;
 
     @IsNotEmpty({message: "Tahun terbit tidak boleh kosong"})
@@ -14,7 +14,7 @@ export class CreateBookDto {
     @Min(0, {message: "Tahun terbit tidak boleh negatif"})
     readonly publishedYear: number;
 
-    
+    @IsOptional()
     @IsBoolean({message: "Status ketersediaan harus berupa true atau false"})
     readonly isAvailable?: boolean;
 

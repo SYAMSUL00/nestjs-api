@@ -7,8 +7,8 @@ services:
         restart: always
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DATABASE: sikular
+          POSTGRES_PASSWORD: syamsul23
+          POSTGRES_DB: framework_programing
         ports:
            #format port dikomputer:postdicontainer
          - "5432:5432"

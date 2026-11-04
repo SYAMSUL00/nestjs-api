@@ -12,12 +12,11 @@ export class BooksService {
   ) {}
 
 
-  private readonly relations = [
-    'category',
-    'publisher',
-    'bookAuthors',
-    'bookAuthors.author',
-  ];
+  private readonly relations = {
+    category: true,
+    publisher: true,
+    bookAuthors: { author: true },
+  };
 
   // Menampilkan semua buku
   async findAll(): Promise<Book[]> {
